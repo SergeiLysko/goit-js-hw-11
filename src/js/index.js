@@ -18,12 +18,11 @@ const options = {
 
 const observer = new IntersectionObserver(handleIntersect, options);
 searchForm.addEventListener('submit', handlerSearchForm);
-// loadMoreBtn.addEventListener('click', handlerLoadMoreBtn);
+
 
 function handlerSearchForm(evt) {
   evt.preventDefault();
   target.hidden = true;
-  // loadMoreBtn.hidden = true;
   gallery.innerHTML = '';
   const searchQuery = evt.currentTarget.elements['searchQuery'].value.trim();
   pixabayAPI.q = searchQuery;
@@ -38,15 +37,12 @@ async function searchPhotos() {
       Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.'
       );
-      // loadMoreBtn.hidden = true;
-      return;
     }
     Notify.success(`Hooray! We found ${data.totalHits} images.`);
     gallery.insertAdjacentHTML('beforeend', createMarkup(data.hits));
     target.hidden = false;
     observer.observe(target);
     simplelightbox.refresh();
-    // loadMoreBtn.hidden = false;
   } catch (error) {
     console.log(error);
   }
@@ -69,10 +65,8 @@ async function searchMorePhotos() {
       Notify.failure(
         "We're sorry, but you've reached the end of search results."
       );
-      // loadMoreBtn.hidden = true;
       return;
     }
-    // addSmoothScroll();
     simplelightbox.refresh();
   } catch (error) {}
 }
